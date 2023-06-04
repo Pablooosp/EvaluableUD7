@@ -1,0 +1,10 @@
+a{
+    object-position: right;
+}
+button{
+    padding: 10px 16px;
+    background-color: yellow;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

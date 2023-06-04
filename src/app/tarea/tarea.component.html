@@ -1,0 +1,58 @@
+<div class="contenedor-tareas">
+  <div class="crear-tarea">
+    <h2>Crear Tareas</h2>
+    <form (ngSubmit)="agregarTarea()" #formularioTarea="ngForm">
+    <div class="grupo-formulario">
+      <label for="titulo">Título</label>
+      <input type="text" id="titulo" name="titulo" [(ngModel)]="nuevaTarea.titulo" required>
+    </div>
+
+    <div class="grupo-formulario">
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" name="descripcion" [(ngModel)]="nuevaTarea.descripcion" required></textarea>
+    </div>
+
+    <div class="grupo-formulario">
+      <label for="fecha">Fecha</label>
+      <input type="date" id="fecha" name="fecha" [(ngModel)]="nuevaTarea.fecha" required>
+    </div>
+
+    <button id="btnAgregar" type="submit" [disabled]="formularioTarea.invalid">Agregar</button>
+    </form>
+  </div>
+<h1 id="tareas-titulo">TAREAS</h1>
+<div class="filtro-tareas">
+  <label>Filtrar por estado:</label>
+  <select [(ngModel)]="estadoFiltrado">
+  <option value="todos">Todos</option>
+  <option value="pendiente">Pendiente</option>
+  <option value="completado">Completado</option>
+</select>
+</div>  
+  <div class="lista-tareas">
+    <div class="tarea" *ngFor="let tarea of tareas" [hidden]="estadoFiltrado !== 'todos' && tarea.estado !== estadoFiltrado">
+      <div class="cabecera-tarea">
+        <h3>{{ tarea.titulo }}</h3>
+        <label>
+          <input type="checkbox" [checked]="tarea.estado === 'completado'" (change)="cambiarEstado(tarea)">
+          {{ tarea.estado === 'completado' ? 'Completado' : 'Pendiente' }}
+        </label>
+        <button id="btnEditar" (click)="editarTarea(tarea)">Editar</button>
+        <button (click)="eliminarTarea(tarea)">Eliminar</button>
+      </div>
+      <p>{{ tarea.descripcion }}</p>
+      <p>Fecha: {{ tarea.fecha }}</p>
+      <div *ngIf="tarea.editando">
+        <input type="text" [(ngModel)]="tarea.titulo">
+        <textarea [(ngModel)]="tarea.descripcion"></textarea>
+        <input type="date" [(ngModel)]="tarea.fecha">
+        <button id="btnGuardar" (click)="guardarEdicion(tarea)">Guardar</button>
+      </div>
+      
+    </div>
+  </div>
+  
+  
+  
+  
+</div>
